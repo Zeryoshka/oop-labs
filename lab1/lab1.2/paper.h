@@ -6,17 +6,20 @@
 #define DEFAULT_LENGTH 10
 #define DEFAULT_POSITION_X 0
 #define DEFAULT_POSITION_Y 0
+#define DEFAULT_M 10
 
 class Paper {
 public:
     Paper();
     Paper(
-        const int &width, const int &length, const int &height,
-        const int &x, const int &y
+        const int &length, const int &width, const int &height,
+        const int &x, const int &y, const int &m
     );
     Paper(const Paper &paper);
 
     ~Paper();
+
+    bool dotInBorders(float x, float y) const;
 
     int getWidth() const;
     int getLength() const;
@@ -25,6 +28,7 @@ public:
     void setX(const int &x);
     int getY() const;
     void setY(const int &y);
+    int getM() const;
 
 private:
     int _width;
@@ -32,6 +36,7 @@ private:
     int _height;
     int _x;
     int _y;
+    int _m;
 };
 
 #endif
