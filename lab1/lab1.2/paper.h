@@ -8,6 +8,8 @@
 #define DEFAULT_POSITION_Y 0
 #define DEFAULT_M 10
 
+#include <string>
+#include <sstream>
 class Paper {
 public:
     Paper();
@@ -16,6 +18,7 @@ public:
         const int &x, const int &y, const int &m
     );
     Paper(const Paper &paper);
+    Paper(const std::string &string);
 
     ~Paper();
 
@@ -29,6 +32,7 @@ public:
     int getY() const;
     void setY(const int &y);
     int getM() const;
+    std::string toString() const;
 
 private:
     int _width;

@@ -1,7 +1,18 @@
 #include "paper.h"
+#include "iterator.h"
 #include "stack.h"
 #include <assert.h>
-#include <iostream>
+
+void stacksIsEqual(const Stack<Paper> &s1, const Stack<Paper> &s2);
+void papersIsEqual(const Paper &p1, const Paper &p2);
+void paperTest();
+void stackTest();
+
+int main() {
+    paperTest();
+    stackTest();
+    return 0;
+}
 
 void paperTest() {
     Paper default_paper;
@@ -49,42 +60,43 @@ void paperTest() {
 }
 
 void stackTest() {
-    Stack<Paper> default_stack;
-    assert(default_stack.getLen() == 0);
-    default_stack.push(Paper());
-    assert(
-        default_stack.top().getHeight() == DEFAULT_HEIGHT &&
-        default_stack.top().getWidth() == DEFAULT_WIDTH &&
-        default_stack.top().getLength() == DEFAULT_LENGTH &&
-        default_stack.top().getX() == DEFAULT_POSITION_X &&
-        default_stack.top().getY() == DEFAULT_POSITION_Y &&
-        default_stack.top().getM() == DEFAULT_M
-    );
-    for (int i = 0; i < 4; ++i)
-        default_stack.push(Paper());
-    assert(default_stack.getLen() == 5);
 
-    Stack<Paper> stack(default_stack);
-    assert(stack.getLen() == 5);
+    Stack<Paper> stack1;
+    assert(stack1.getLen() == 0);
+    for (int i = 0; i < 5; ++i)
+        stack1.push(Paper());
+    assert(stack1.getLen() == 5);
 
-    Paper paper = stack.pop();
-    assert(
-        paper.getHeight() == DEFAULT_HEIGHT &&
-        paper.getWidth() == DEFAULT_WIDTH &&
-        paper.getLength() == DEFAULT_LENGTH &&
-        paper.getX() == DEFAULT_POSITION_X &&
-        paper.getY() == DEFAULT_POSITION_Y &&
-        paper.getM() == DEFAULT_M
-    );
-    assert(stack.getLen() == 4);
+    Stack<Paper> stack2(stack1);
+    stacksIsEqual(stack1, stack2);
 
-    assert(stack.isBalance());
-    default_stack.push(Paper(100, 100, 2, 300, 300, 1500));
-    assert(!stack.isBalance());
+    stack2.serialise("test.txt");
+    Stack<Paper> stack3("test.txt");
+    stacksIsEqual(stack2, stack3);
+
+    stack2.pop();
+    assert(stack2.getLen() == 4);
+    stack2.clear();
+    assert(stack2.isEmpty());
 }
 
-int main() {
-    paperTest();
-    stackTest();
-    return 0;
+void papersIsEqual(const Paper &p1, const Paper &p2) {
+    assert(
+        p1.getHeight() == p2.getHeight() &&
+        p1.getLength() == p2.getLength() &&
+        p1.getWidth() == p2.getWidth() &&
+        p1.getX() == p2.getX()&&
+        p1.getY() == p2.getY()&&
+        p1.getM() == p2.getM()
+    );
+}
+
+void stacksIsEqual(const Stack<Paper> &s1, const Stack<Paper> &s2) {
+    assert(s1.getLen() != s2.getLen());
+    Iterator<Paper> iter1 = s1.iterator(), iter2 = s2.iterator();
+    while (iter1.isLast()) {
+        papersIsEqual(iter1.value(), iter2.value());
+        iter1.next(), iter2.next();
+    }
+
 }

@@ -1,4 +1,9 @@
 #include "paper.h"
+#include <sstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 Paper::Paper() {
     _width = DEFAULT_WIDTH;
@@ -28,6 +33,20 @@ Paper::Paper(const Paper &paper) {
     _x = paper.getX();
     _y = paper.getY();
     _m = paper.getM();
+}
+
+Paper::Paper(const string &s) {
+    stringstream parse;
+    parse << s;
+    parse >> _width >> _height >>
+    _length >> _x >> _y >> _m;
+}
+
+string Paper::toString() const {
+    stringstream parse;
+    parse << _width << " " << _height << " " <<
+        _length << " " << _x << " " << _y << " " << _m;
+    return parse.str();
 }
 
 Paper::~Paper() {}
