@@ -3,6 +3,7 @@
 
 #define DEFAULT_WIDTH 10
 #define DEFAULT_LENGTH 10
+#define PAPER_CODE "Paper"
 
 #include <string>
 #include "item.h"

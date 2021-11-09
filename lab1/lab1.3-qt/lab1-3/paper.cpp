@@ -6,6 +6,7 @@
 using namespace std;
 
 Paper::Paper() : Item() {
+    _code = PAPER_CODE;
     _width = DEFAULT_WIDTH;
     _length = DEFAULT_LENGTH;
 }
@@ -14,11 +15,13 @@ Paper::Paper(
         const int &length, const int &width, const int &height,
         const int &x, const int &y, const int &m
 ) : Item(x, y, m, height) {
+    _code = PAPER_CODE;
     _width = width;
     _length = length;
 }
 
 Paper::Paper(const Paper &paper) {
+    _code = PAPER_CODE;
     _width = paper.getWidth();
     _length = paper.getLength();
     _height = paper.getHeight();
@@ -28,6 +31,7 @@ Paper::Paper(const Paper &paper) {
 }
 
 Paper::Paper(const string &s) {
+    _code = PAPER_CODE;
     stringstream parse;
     parse << s;
     parse >> _x >> _y >> _m >> _width >> _height >> _length;
@@ -47,7 +51,7 @@ bool Paper::dotInBorders(float x, float y) const {
     y -= _y;
     if (x < -_length / 2 || x > _length / 2)
         return false;
-    if (y < _width / 2 || y > _width / 2)
+    if (y < -_width / 2 || y > _width / 2)
         return false;
     return true;
 }

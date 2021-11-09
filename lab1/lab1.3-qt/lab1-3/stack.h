@@ -7,9 +7,9 @@
 #include "plate.h"
 #include <fstream>
 #include <variant>
+#include <QTextStream>
 
-
-#define DELAULT_LEN 4
+#define DELAULT_LEN 2
 #define EMPTY_STACK_EXCPEPTION "STACK IS EMPTY"
 #define SMALL_LEN "max_len < _len"
 
@@ -20,7 +20,7 @@ public:
     Stack();
     Stack(const int &base_len);
     Stack(const Stack &stack);
-    Stack(const std::string &path);
+    Stack(QTextStream &in);
     ~Stack();
 
     void push(const ItemVariant &item);
@@ -29,10 +29,10 @@ public:
     ItemVariant top() const;
     bool isEmpty() const;
     int getLen() const;
-    Iterator iterator() const;
+    Iterat getIterator() const;
 
     bool isBalance() const;
-    void serialise(const std::string &path) const;
+    void serialise(QTextStream &out) const;
 
 private:
     ItemVariant* _copyToArray(const int &max_len) const;

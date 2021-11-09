@@ -3,12 +3,15 @@
 #define LAST_EXCEPTION
 
 #include <string>
-#include "stack.h"
+#include <variant>
+#include "paper.h"
+#include "plate.h"
 
-class Iterator {
+typedef std::variant<Paper, Plate> ItemVariant;
+class Iterat {
 public:
-    Iterator(ItemVariant* stack, const int &len);
-    ~Iterator();
+    Iterat(ItemVariant *stack, const int &len);
+    ~Iterat();
     ItemVariant value() const;
     void next();
     void head();
